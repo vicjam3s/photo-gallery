@@ -1,2 +1,4 @@
 /venv
 /galleryapp/migrations
+.env
+/photogallery/__pycache__
