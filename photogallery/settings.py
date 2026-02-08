@@ -142,3 +142,5 @@ STATICFILES_STORAGE = "cloudinary_storage.storage.StaticHashedCloudinaryStorage"
 
 MEDIA_URL = "media/"
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+
+LOGIN_TEMPLATE_NAME = "login.html"

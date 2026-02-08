@@ -1,7 +1,9 @@
-from django.urls import path
-from . import views
+from django.contrib import admin
+from django.urls import path, include
 
 urlpatterns = [
-    path("", views.photo_list, name="photo-list"),
-    path("photo/<int:photo_id>/", views.photo_detail, name="photo-detail"),
+    path("admin/", admin.site.urls),
+    path("", include("galleryapp.urls")),
+    path("accounts/", include("django.contrib.auth.urls")),
 ]
+
