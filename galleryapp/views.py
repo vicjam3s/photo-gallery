@@ -1,3 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from .models import Photo
 
-# Create your views here.
+
+def photo_list(request):
+    photos = Photo.objects.all().order_by("-created_at")
+    return render(request, "galleryapp/photo_list.html", {"photos": photos})
+
+
+def photo_detail(request, photo_id):
+    photo = get_object_or_404(Photo, id=photo_id)
+    return render(request, "galleryapp/photo_detail.html", {"photo": photo})

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Photo Gallery{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+  <div class="col">
+    <h1>Photo Gallery</h1>
+  </div>
+</div>
+
+{% if photos %}
+  <div class="row g-4">
+    {% for photo in photos %}
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+          <a href="{% url 'photo-detail' photo.id %}" class="text-decoration-none">
+            <img src="{{ photo.image.url }}" class="card-img-top" alt="{{ photo.title }}" style="height: 250px; object-fit: cover;">
+          </a>
+          <div class="card-body">
+            <h5 class="card-title">
+              <a href="{% url 'photo-detail' photo.id %}" class="text-decoration-none text-dark">
+                {{ photo.title }}
+              </a>
+            </h5>
+            <p class="card-text text-muted small">by {{ photo.uploaded_by.username }}</p>
+            <p class="card-text">{{ photo.description|truncatewords:15 }}</p>
+            <div class="mb-2">
+              {% for tag in photo.tags.all %}
+                <span class="badge bg-warning text-dark">{{ tag.name }}</span>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="alert alert-info" role="alert">
+    No photos yet. Check back soon!
+  </div>
+{% endif %}
+{% endblock %}
