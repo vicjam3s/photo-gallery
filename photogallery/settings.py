@@ -137,6 +137,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
+# Url redirects..
 STATIC_URL = 'static/'
 STATICFILES_STORAGE = "cloudinary_storage.storage.StaticHashedCloudinaryStorage"
 
@@ -144,3 +145,7 @@ MEDIA_URL = "media/"
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 LOGIN_TEMPLATE_NAME = "login.html"
+LOGIN_REDIRECT_URL = "photo-list"
+LOGOUT_REDIRECT_URL = "photo-list"
+LOGIN_URL = "login"
+

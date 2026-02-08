@@ -1,9 +1,13 @@
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+from django.contrib.auth.views import LogoutView
+from . import views
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("", include("galleryapp.urls")),
-    path("accounts/", include("django.contrib.auth.urls")),
-]
+    path("", views.photo_list, name="photo-list"),
+    path("photo/<int:photo_id>/", views.photo_detail, name="photo-detail"),
+    path("login/", views.CustomLoginView.as_view(), name="login"),
+    path("logout/", LogoutView.as_view(next_page="photo-list"), name="logout"),
+    path("register/", views.register, name="register"),
+    path("profile/", views.profile, name="profile"),
+]    
 
