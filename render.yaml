@@ -3,4 +3,4 @@ services:
     name: galleryapp
     env: python
     buildCommand: pip install -r requirements.txt && python manage.py migrate
-    startCommand: gunicorn photogallery.wsgi:application
+    startCommand: "gunicorn photogallery.wsgi:application"
