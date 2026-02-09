@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+<div class="text-center py-5">
+
+  <h1 class="display-5 fw-bold mb-3">
+    Discover Beautiful Photos & Art
+  </h1>
+
+  <p class="lead text-muted mb-4">
+    Explore portraits, photography, and artworks curated by our community.
+  </p>
+
+  <a href="{% url 'photo-list' %}" class="btn btn-warning btn-lg px-5">
+    View Photos
+  </a>
+
+</div>
+{% endblock %}

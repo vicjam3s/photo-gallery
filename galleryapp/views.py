@@ -1,17 +1,37 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Photo, Album
+from .models import Photo, Album, Like, Tag
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView, LogoutView
+from .forms import ProfileForm
+
+# Landing page view
+def landing(request):
+    return render(request, "landing.html")
 
 
+# Photo list view
 def photo_list(request):
-    photos = Photo.objects.all().order_by("-created_at")
-    return render(request, "photo_list.html", {"photos": photos})
+    tag_name = request.GET.get("tag")
+    tags = Tag.objects.all()
 
+    if tag_name:
+        photos = Photo.objects.filter(tags__name=tag_name)
+    else:
+        photos = Photo.objects.all()
 
-# Photo detail view
+    return render(
+        request,
+        "photo_list.html",
+        {
+            "photos": photos,
+            "tags": tags,
+            "active_tag": tag_name,
+        },
+    )
+
+# Photo details view
 def photo_detail(request, photo_id):
     photo = get_object_or_404(Photo, id=photo_id)
     return render(request, "photo_detail.html", {"photo": photo})
@@ -31,7 +51,17 @@ def register(request):
 # User profile view
 @login_required
 def profile(request):
-    return render(request, "profile.html")
+    profile = request.user.profile
+
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect("profile")
+    else:
+        form = ProfileForm(instance=profile)
+
+    return render(request, "profile.html", {"form": form})
 
 # Album list view
 @login_required
@@ -67,3 +97,20 @@ def add_to_album(request, album_id, photo_id):
 
     album.photos.add(photo)
     return redirect("album-detail", album_id=album.id)
+
+# Toggle like view
+@login_required
+def toggle_like(request, photo_id):
+    photo = get_object_or_404(Photo, id=photo_id)
+
+    like, created = Like.objects.get_or_create(
+        user=request.user,
+        photo=photo,
+        defaults={"is_liked": True},
+    )
+
+    if not created:
+        like.is_liked = not like.is_liked
+        like.save()
+
+    return redirect("photo-detail", photo_id=photo.id)

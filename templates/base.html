@@ -17,7 +17,10 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
   <div class="container">
-    <a class="navbar-brand fw-bold text-warning" href="/">GalleryApp</a>
+    <a class="navbar-brand fw-bold text-warning" href="{% url 'landing' %}">
+      GalleryApp
+    </a>
+
 
     <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
       <span class="navbar-toggler-icon"></span>
@@ -25,6 +28,7 @@
 
     <div class="collapse navbar-collapse" id="nav">
       <ul class="navbar-nav ms-auto">
+
         {% if user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'album-list' %}">Albums</a>
@@ -42,6 +46,10 @@
           </li>
 
         {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'photo-list' %}">Gallery</a>
+          </li>
+
           <li class="nav-item">
             <a class="nav-link" href="{% url 'login' %}">Login</a>
           </li>

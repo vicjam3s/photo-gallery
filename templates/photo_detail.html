@@ -20,16 +20,20 @@
     </div>
 
     {% if user.is_authenticated %}
-    <h6>Add to Album</h6>
-    {% for album in user.album_set.all %}
-        <a
-        href="{% url 'add-to-album' album.id photo.id %}"
-        class="btn btn-outline-warning btn-sm mb-1"
-        >
-        {{ album.name }}
-        </a>
-    {% endfor %}
+      <form method="post" action="{% url 'toggle-like' photo.id %}">
+        {% csrf_token %}
+        <button class="btn btn-warning btn-sm">
+          {% if photo.like_set.filter(user=user, is_liked=True).exists %}
+            Unlike
+          {% else %}
+            Like
+          {% endif %}
+        </button>
+      </form>
+    {% else %}
+      <p class="text-muted small">Login to like photos.</p>
     {% endif %}
+
 
   </div>
 </div>
