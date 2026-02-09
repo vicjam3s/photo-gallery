@@ -20,14 +20,17 @@
     </div>
 
     {% if user.is_authenticated %}
-      <form method="post">
-        {% csrf_token %}
-        <button class="btn btn-warning btn-sm">Like</button>
-        <button class="btn btn-outline-secondary btn-sm">Save to Album</button>
-      </form>
-    {% else %}
-      <p class="text-muted small">Login to like or save photos.</p>
+    <h6>Add to Album</h6>
+    {% for album in user.album_set.all %}
+        <a
+        href="{% url 'add-to-album' album.id photo.id %}"
+        class="btn btn-outline-warning btn-sm mb-1"
+        >
+        {{ album.name }}
+        </a>
+    {% endfor %}
     {% endif %}
+
   </div>
 </div>
 {% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>{{ album.name }}</h3>
+
+<div class="row">
+  {% for photo in album.photos.all %}
+    <div class="col-md-4 mb-3">
+      <img src="{{ photo.image.url }}" class="img-fluid rounded">
+    </div>
+  {% empty %}
+    <p>No photos in this album.</p>
+  {% endfor %}
+</div>
+{% endblock %}

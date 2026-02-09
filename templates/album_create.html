@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Create Album</h3>
+
+<form method="post">
+  {% csrf_token %}
+  <input
+    type="text"
+    name="name"
+    class="form-control mb-2"
+    placeholder="Album name"
+    required
+  >
+  <button class="btn btn-warning">Create</button>
+</form>
+{% endblock %}

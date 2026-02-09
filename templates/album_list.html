@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Your Albums</h3>
+
+<a href="{% url 'album-create' %}" class="btn btn-warning btn-sm mb-3">
+  Create New Album
+</a>
+
+<ul class="list-group">
+  {% for album in albums %}
+    <li class="list-group-item d-flex justify-content-between">
+      <a href="{% url 'album-detail' album.id %}">
+        {{ album.name }}
+      </a>
+      <span class="text-muted small">
+        {{ album.photos.count }} photos
+      </span>
+    </li>
+  {% empty %}
+    <li class="list-group-item">No albums yet.</li>
+  {% endfor %}
+</ul>
+{% endblock %}
