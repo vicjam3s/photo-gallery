@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Photo, Album, Like, Tag
+from .models import Photo, Album, Like, Tag, Profile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
@@ -34,7 +34,10 @@ def photo_list(request):
 # Photo details view
 def photo_detail(request, photo_id):
     photo = get_object_or_404(Photo, id=photo_id)
-    return render(request, "photo_detail.html", {"photo": photo})
+    user_liked = False
+    if request.user.is_authenticated:
+        user_liked = Like.objects.filter(user=request.user, photo=photo, is_liked=True).exists()
+    return render(request, "photo_detail.html", {"photo": photo, "user_liked": user_liked})
 
 # User registration view
 def register(request):
@@ -51,7 +54,7 @@ def register(request):
 # User profile view
 @login_required
 def profile(request):
-    profile = request.user.profile
+    profile, created = Profile.objects.get_or_create(user=request.user)
 
     if request.method == "POST":
         form = ProfileForm(request.POST, request.FILES, instance=profile)
