@@ -2,5 +2,5 @@ services:
   - type: web
     name: galleryapp
     env: python
-    buildCommand: pip install -r requirements.txt && python manage.py migrate
-    startCommand: "gunicorn photogallery.wsgi:application"
+    buildCommand: pip install -r requirements.txt && python manage.py migrate --noinput
+    startCommand: "python manage.py migrate --noinput && gunicorn photogallery.wsgi:application"
