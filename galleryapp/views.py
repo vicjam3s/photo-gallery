@@ -78,6 +78,7 @@ def register(request):
 @login_required
 def profile(request):
     profile, created = Profile.objects.get_or_create(user=request.user)
+    liked_photos = Photo.objects.filter(like__user=request.user, like__is_liked=True).distinct()
 
     if request.method == "POST":
         form = ProfileForm(request.POST, request.FILES, instance=profile)
@@ -87,7 +88,7 @@ def profile(request):
     else:
         form = ProfileForm(instance=profile)
 
-    return render(request, "profile.html", {"form": form})
+    return render(request, "profile.html", {"form": form, "liked_photos": liked_photos})
 
 # Album list view
 @login_required
