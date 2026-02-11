@@ -1,10 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Photo, Album, Like, Tag, Profile
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView, LogoutView
-from .forms import ProfileForm
+from .forms import ProfileForm, PhotoForm, RegistrationForm
 
 # Landing page view
 def landing(request):
@@ -31,6 +30,30 @@ def photo_list(request):
         },
     )
 
+# Photo creation view
+@login_required
+def photo_create(request):
+    if request.method == "POST":
+        form = PhotoForm(request.POST, request.FILES)
+        if form.is_valid():
+            photo = form.save(commit=False)
+            photo.uploaded_by = request.user
+            photo.save()
+            
+            # Handle tags
+            tags_input = form.cleaned_data.get("tags", "")
+            if tags_input:
+                tag_names = [tag.strip() for tag in tags_input.split(",") if tag.strip()]
+                for tag_name in tag_names:
+                    tag, created = Tag.objects.get_or_create(name=tag_name)
+                    photo.tags.add(tag)
+            
+            return redirect("photo-list")
+    else:
+        form = PhotoForm()
+    
+    return render(request, "photo_create.html", {"form": form})
+
 # Photo details view
 def photo_detail(request, photo_id):
     photo = get_object_or_404(Photo, id=photo_id)
@@ -42,12 +65,12 @@ def photo_detail(request, photo_id):
 # User registration view
 def register(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect("login")
     else:
-        form = UserCreationForm()
+        form = RegistrationForm()
 
     return render(request, "registration.html", {"form": form})
 

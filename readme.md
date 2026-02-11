@@ -2,7 +2,7 @@
 
 A modern web-based photo gallery application built with Django, featuring user authentication, photo management, album creation, and social features like liking and tagging.
 
-##  Features
+## Features
 
 - **User Authentication**: Register, login, and manage user accounts
 - **Photo Management**: Upload, view, and organize photos with descriptions and tags
@@ -13,7 +13,7 @@ A modern web-based photo gallery application built with Django, featuring user a
 - **Cloud Storage**: Photos stored securely on Cloudinary
 - **Responsive Design**: Works across desktop and mobile devices
 
-##  Tech Stack
+## Tech Stack
 
 | Component | Technology |
 |-----------|-----------|
@@ -25,7 +25,7 @@ A modern web-based photo gallery application built with Django, featuring user a
 | **Static Files** | WhiteNoise |
 | **Python Version** | 3.8+ |
 
-##  Prerequisites
+## Prerequisites
 
 - Python 3.8 or higher
 - PostgreSQL installed and running
@@ -33,7 +33,7 @@ A modern web-based photo gallery application built with Django, featuring user a
 - Cloudinary account (for image storage)
 - pip (Python package manager)
 
-##  Setup & Installation
+## Setup & Installation
 
 ### 1. Clone the Repository
 
@@ -108,7 +108,7 @@ python manage.py runserver
 
 The application will be available at `http://127.0.0.1:8000/`
 
-##  How to Use & Navigate
+## How to Use & Navigate
 
 ### Landing Page
 - Navigate to the home page to see the landing/welcome page
