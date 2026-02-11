@@ -1,5 +1,5 @@
 /venv
-/galleryapp/migrations
+# /galleryapp/migrations
 .env
 /photogallery/__pycache__
 /staticfiles
